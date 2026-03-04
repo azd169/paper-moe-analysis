@@ -4,6 +4,11 @@
 .RData
 .Ruserdata
 
+# renv (keep lockfile, ignore installed library)
+renv/library/
+renv/python/
+renv/staging/
+
 # OS
 .DS_Store
 Thumbs.db
