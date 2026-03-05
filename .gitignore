@@ -19,3 +19,7 @@ data/raw/
 # Outputs (optional)
 outputs/
 report/*.html
+
+# Allow the canonical shared dataset
+!data/raw/
+!data/raw/data.csv
