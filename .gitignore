@@ -17,7 +17,6 @@ Thumbs.db
 data/raw/
 
 # Outputs (optional)
-outputs/
 report/*.html
 
 # Allow the canonical shared dataset
