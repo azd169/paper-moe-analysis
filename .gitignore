@@ -13,12 +13,9 @@ renv/staging/
 .DS_Store
 Thumbs.db
 
-# Raw data (do not commit)
-data/raw/
-
-# Outputs (optional)
-report/*.html
-
-# Allow the canonical shared dataset
-!data/raw/
+# Raw data (ignore all, except shared dataset)
+data/raw/*
 !data/raw/data.csv
+
+# Ignore rendered reports
+report/*.html
