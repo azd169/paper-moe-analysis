@@ -1,7 +1,5 @@
 # paper-moe-analysis
 
-# paper-moe-analysis
-
 Statistical analysis of modulus of elasticity (MOE) measurements in managed and unmanaged *Pinus nigra* stands using destructive and non-destructive methods.
 
 ## Repository structure
