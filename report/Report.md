@@ -18,14 +18,7 @@ Each tree was measured with all non-destructive methods. Destructive testing was
 
 The modulus of elasticity (MOE) was analyzed using a linear mixed-effects model:
 
-$$
-MOE_{ijk} = \beta_0
-+ \beta_1 \,\text{Treatment}_i
-+ \beta_2 \,\text{Stand}_j
-+ \beta_3 \,(\text{Treatment}_i \times \text{Stand}_j)
-+ b_k
-+ \varepsilon_{ijk}
-$$
+$MOE_{ijk} = \beta_0 + \beta_1 \,\text{Treatment}_i + \beta_2 \,\text{Stand}_j + \beta_3 \,(\text{Treatment}_i \times \text{Stand}_j) + b_k + \varepsilon_{ijk}$
 
 where:
 
