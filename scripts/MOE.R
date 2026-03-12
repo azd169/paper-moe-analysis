@@ -61,18 +61,18 @@ p1_violin_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment)) +
   theme_bw() +
   theme(
     legend.position = "none",
-    text = element_text(size = 14)
+    text = element_text(size = 14),
   ) +
   labs(
     x = "Measurement Method",
     y = "Modulus of Elasticity (GPa)"
   )
 
-# ggsave( p1_violin_trt,
-#  here("outputs", "figures", "violin_treatment.png"),
-#  width = 7,
-#  height = 5,
-#  dpi = 300)
+ggsave(plot = p1_violin_trt,
+       filename = here("outputs", "figures", "plot1_violin_treatment.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 p2_violin_stand <- ggplot(df_clean, aes(Stand, MOE, fill = Stand)) +
   geom_violin() +
@@ -87,11 +87,11 @@ p2_violin_stand <- ggplot(df_clean, aes(Stand, MOE, fill = Stand)) +
     y = "Modulus of Elasticity (GPa)"
   )
 
-# ggsave(p2_violin_stand,
-#  here("outputs", "figures", "violin_stand.png"),
-#  width = 7,
-#  height = 12,
-#  dpi = 300)
+ggsave(plot = p2_violin_stand,
+       filename = here("outputs", "figures", "plot2_violin_stand.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 p3_violin_stand_x_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment)) +
   geom_violin() +
@@ -100,18 +100,18 @@ p3_violin_stand_x_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment))
   theme_bw() +
   theme(
     legend.position = "none",
-    text = element_text(size = 14)
-  ) +
+    text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(
     x = "Measurement Method",
     y = "Modulus of Elasticity (GPa)"
   )
 
-# ggsave(p3_violin_stand_x_trt,
-#  here("outputs", "figures", "violin_stand_x_trt.png"),
-#  width = 25,
-#  height = 25,
-#  dpi = 300)
+ggsave(plot = p3_violin_stand_x_trt,
+       filename = here("outputs", "figures", "plot3_violin_stand_x_trt.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 # Model
 model <- lme(
@@ -218,11 +218,11 @@ p4_boxplot_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment)) +
     y = "Modulus of Elasticity (GPa)"
     )
 
-# ggsave(plot = p4_boxplot_trt,
-#       filename = here("outputs", "figures", "p4_boxplot_trt.png"),
-#       width = 7,
-#       height = 5,
-#       dpi = 300)
+ggsave(plot = p4_boxplot_trt,
+       filename = here("outputs", "figures", "plot4_boxplot_trt.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 p5_boxplot_trt_stand <- ggplot(df_clean, aes(x = Treatment, y = MOE, fill = Treatment)) +
   geom_boxplot(width = 0.65, outlier.shape = NA, alpha = 0.8) +
@@ -243,6 +243,7 @@ p5_boxplot_trt_stand <- ggplot(df_clean, aes(x = Treatment, y = MOE, fill = Trea
   theme_bw() +
   theme(
     legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1),
     text = element_text(size = 14)
   ) +
   labs(
@@ -250,17 +251,63 @@ p5_boxplot_trt_stand <- ggplot(df_clean, aes(x = Treatment, y = MOE, fill = Trea
     y = "Modulus of Elasticity (GPa)"
   )
 
-# ggsave(plot = p5_boxplot_trt_stand,
-#       filename = here("outputs", "figures", "p5_boxplot_trt_stand.png"),
-#       width = 7,
-#       height = 5,
-#       dpi = 300)
+ggsave(plot = p5_boxplot_trt_stand,
+       filename = here("outputs", "figures", "plot5_boxplot_trt_stand.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 # Linearity and homoscedasticity check
-p6_fitted_vs_res <- plot(model)
+df_clean$resid  <- resid(model)
+df_clean$fitted <- fitted(model)
 
-qqnorm(residuals(model))
+p6_fitted_vs_res <- ggplot(df_clean, aes(fitted, resid)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  theme_bw() +
+  labs(
+    x = "Fitted values",
+    y = "Residuals",
+    title = "Residuals vs Fitted"
+  )
+
+ggsave(plot = p6_fitted_vs_res,
+       filename = here("outputs", "figures", "plot6_fitted_vs_residuals.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
+
+p7_qqplot <- ggplot(df_clean, aes(sample = resid)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_bw() +
+  labs(
+    title = "Normal Q-Q Plot of Model Residuals",
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  )
 qqline(residuals(model))
+
+ggsave(plot = p7_qqplot,
+       filename = here("outputs", "figures", "plot7_qnorm.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
+
+p8_resid_hist <- ggplot(df_clean, aes(resid)) +
+  geom_histogram(bins = 20, fill = "grey70", color = "black") +
+  theme_bw() +
+  labs(
+    title = "Distribution of Model Residuals",
+    x = "Residuals",
+    y = "Frequency"
+  )
+
+ggsave(plot = p8_resid_hist,
+       filename = here("outputs", "figures", "plot8_res_distr.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
 
 # Residual outliers
 df_clean$resid <- resid(model, type = "normalized")
@@ -268,9 +315,14 @@ df_clean$resid <- resid(model, type = "normalized")
 df_clean %>%
   filter(abs(resid) > 3)
 
-ggplot(df_clean, aes(Treatment, resid)) +
+p9_res_out <- ggplot(df_clean, aes(Treatment, resid)) +
   geom_boxplot() +
-  geom_hline(yintercept = c(-3,3), linetype="dashed", color="red") +
+  labs(title = "Residual Outliers") +
+  geom_hline(yintercept = c(-3,3), linetype = "dashed", color="red") +
   theme_bw()
 
-
+ggsave(plot = p9_res_out,
+       filename = here("outputs", "figures", "plot8_res_out.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
