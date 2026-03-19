@@ -57,3 +57,11 @@ Model diagnostics included:
 - QQ plots
 - Levene test for variance heterogeneity
 - inspection of random effects
+
+## Bland-Altman plots
+
+Bland–Altman plots were used to assess the agreement between each non-destructive testing (NDT) method (TreeSonic, Resistograph, and Microsecond) and the destructive reference measurements of modulus of elasticity (MOE). For each pairwise comparison, the difference between the NDT estimate and the destructive measurement was plotted against their mean value for each tree.
+
+The mean difference (bias) represents the systematic deviation of each NDT method relative to the destructive reference, while the limits of agreement (LoA), defined as the mean difference ± 1.96 standard deviations, describe the range within which most differences are expected to lie.
+
+In addition to Bland–Altman analysis, model performance was quantified using root mean square error (RMSE), mean bias, and percent bias relative to the destructive measurements. These metrics provide complementary information on both the magnitude and direction of error.
