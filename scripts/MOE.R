@@ -12,6 +12,9 @@ library(emmeans)
 library(multcomp)
 library(multcompView)
 library(here)
+library(BlandAltmanLeh)
+library(ggpubr)
+library(Metrics)
 
 setwd("..")
 getwd()
@@ -322,7 +325,125 @@ p9_res_out <- ggplot(df_clean, aes(Treatment, resid)) +
   theme_bw()
 
 ggsave(plot = p9_res_out,
-       filename = here("outputs", "figures", "plot8_res_out.png"),
+       filename = here("outputs", "figures", "plot9_res_out.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
+
+# RMSE, bias, and Bland-Altman plots
+# Data in wide-format
+df_wide <- df_clean %>%
+  dplyr::select(Tree_ID, Stand, Treatment, MOE) %>%
+  tidyr::pivot_wider(names_from = Treatment, values_from = MOE)
+
+RMSE <- "RMSE (GPa) ="
+BIAS <- "Bias (GPa) ="
+P_BIAS <- "Bias (%) ="
+
+# Destructive vs. TreeSonic
+TS_RMSE <- round(rmse(df_wide$TreeSonic, df_wide$Destructive), digits = 2)
+TS_BIAS <- round(bias(df_wide$TreeSonic, df_wide$Destructive), digits = 2)
+TS_PBIAS <- round(percent_bias(df_wide$TreeSonic, df_wide$Destructive), digits = 2)
+
+# Destructive vs. Resistograph
+RG_RMSE <- round(rmse(df_wide$Resistrograph, df_wide$Destructive), digits = 2)
+RG_BIAS <- round(bias(df_wide$Resistrograph, df_wide$Destructive), digits = 2)
+RG_PBIAS <- round(percent_bias(df_wide$Resistrograph, df_wide$Destructive), digits = 2)
+
+# Destructive vs. Microsecond
+MS_RMSE <- round(rmse(df_wide$Microsecond, df_wide$Destructive), digits = 2)
+MS_BIAS <- round(bias(df_wide$Microsecond, df_wide$Destructive), digits = 2)
+MS_PBIAS <- round(percent_bias(df_wide$Microsecond, df_wide$Destructive), digits = 2)
+
+# Bland-Altman plot stats
+BA_TS_DS_stats <- bland.altman.stats(df_wide$TreeSonic, df_wide$Destructive)
+BA_RG_DS_stats <- bland.altman.stats(df_wide$Resistrograph, df_wide$Destructive)
+BA_MS_DS_stats <- bland.altman.stats(df_wide$Microsecond, df_wide$Destructive)
+
+# Bland-Altman datasets
+BA_TS_DS_data <- cbind(BA_TS_DS_stats$means, BA_TS_DS_stats$diffs) %>%
+  as_tibble() %>%
+  dplyr::rename(means = V1,
+                differences = V2)
+
+BA_RG_DS_data <- cbind(BA_RG_DS_stats$means, BA_RG_DS_stats$diffs) %>%
+  as_tibble() %>%
+  dplyr::rename(means = V1,
+                differences = V2)
+
+BA_MS_DS_data <- cbind(BA_MS_DS_stats$means, BA_MS_DS_stats$diffs) %>%
+  as_tibble() %>%
+  dplyr::rename(means = V1,
+                differences = V2)
+
+p10_BA_TS <- ggscatter(BA_TS_DS_data, x = "means", y = "differences",
+                      shape = 16,
+                      color = "steelblue",
+                      size = 2,
+                      xlab = "Average measurement (GPa)",  
+                      ylab = "Differences between measurements (GPa)",
+                      title = "Bland Altman: TreeSonic vs. Destructive") +
+  geom_hline(yintercept = BA_TS_DS_stats$mean.diffs, color = "red") +
+  geom_hline(yintercept = BA_TS_DS_stats$upper.limit, linetype = 2) +
+  geom_hline(yintercept = BA_TS_DS_stats$lower.limit, linetype = 2 ) +
+  font("title", size = 18) +
+  font("xlab", size = 16) +
+  font("ylab", size = 16) +
+  font("xy.text", size = 14) +
+  annotate("text", x = 14, y = -9, label = paste(RMSE, TS_RMSE), size = 5, color = "black") +
+  annotate("text", x = 14, y = -10, label = paste(BIAS, TS_BIAS), size = 5, color = "black") +
+  annotate("text", x = 14, y = -11, label = paste(P_BIAS, TS_PBIAS), size = 5, color = "black")
+
+ggsave(plot = p10_BA_TS,
+       filename = here("outputs", "figures", "plot10_BA_TS.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
+
+p11_BA_RG <- ggscatter(BA_RG_DS_data, x = "means", y = "differences",
+                       shape = 16,
+                       color = "steelblue",
+                       size = 2,
+                       xlab = "Average measurement (GPa)",  
+                       ylab = "Differences between measurements (GPa)",
+                       title = "Bland Altman: Resistograph vs. Destructive") +
+  geom_hline(yintercept = BA_RG_DS_stats$mean.diffs, color = "red") +
+  geom_hline(yintercept = BA_RG_DS_stats$upper.limit, linetype = 2) +
+  geom_hline(yintercept = BA_RG_DS_stats$lower.limit, linetype = 2 ) +
+  font("title", size = 18) +
+  font("xlab", size = 16) +
+  font("ylab", size = 16) +
+  font("xy.text", size = 14) +
+  annotate("text", x = 14, y = -10, label = paste(RMSE, RG_RMSE), size = 5, color = "black") +
+  annotate("text", x = 14, y = -11, label = paste(BIAS, RG_BIAS), size = 5, color = "black") +
+  annotate("text", x = 14, y = -12, label = paste(P_BIAS, RG_PBIAS), size = 5, color = "black")
+
+ggsave(plot = p11_BA_RG,
+       filename = here("outputs", "figures", "plot11_BA_RG.png"),
+       width = 7,
+       height = 5,
+       dpi = 300)
+
+p12_BA_MS <- ggscatter(BA_MS_DS_data, x = "means", y = "differences",
+                       shape = 16,
+                       color = "steelblue",
+                       size = 2,
+                       xlab = "Average measurement (GPa)",  
+                       ylab = "Differences between measurements (GPa)",
+                       title = "Bland Altman: Resistograph vs. Destructive") +
+  geom_hline(yintercept = BA_MS_DS_stats$mean.diffs, color = "red") +
+  geom_hline(yintercept = BA_MS_DS_stats$upper.limit, linetype = 2) +
+  geom_hline(yintercept = BA_MS_DS_stats$lower.limit, linetype = 2 ) +
+  font("title", size = 18) +
+  font("xlab", size = 16) +
+  font("ylab", size = 16) +
+  font("xy.text", size = 14) +
+  annotate("text", x = 9, y = -10, label = paste(RMSE, MS_RMSE), size = 5, color = "black") +
+  annotate("text", x = 9, y = -11, label = paste(BIAS, MS_BIAS), size = 5, color = "black") +
+  annotate("text", x = 9, y = -12, label = paste(P_BIAS, MS_PBIAS), size = 5, color = "black")
+
+ggsave(plot = p12_BA_MS,
+       filename = here("outputs", "figures", "plot12_BA_MS.png"),
        width = 7,
        height = 5,
        dpi = 300)
