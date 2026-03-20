@@ -15,6 +15,8 @@ library(here)
 library(BlandAltmanLeh)
 library(ggpubr)
 library(Metrics)
+library(corrplot)
+library(reshape2)
 
 setwd("..")
 getwd()
@@ -447,3 +449,90 @@ ggsave(plot = p12_BA_MS,
        width = 7,
        height = 5,
        dpi = 300)
+
+# Correlation analyisis
+cor_mat <- df_wide %>%
+  dplyr::select(Destructive, TreeSonic, Resistrograph, Microsecond) %>%
+  cor(use = "complete.obs", method = "pearson")
+
+cor_df <- reshape2::melt(cor_mat)
+
+p13_corr <- ggplot(cor_df, aes(Var1, Var2, fill = value)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(value, 2)), size = 4) +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0.7) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title = element_blank()
+  ) +
+  labs(
+    title = "Correlation among MOE measurement methods",
+    fill = "Pearson r"
+  )
+
+ggsave(
+  here("outputs", "figures", "p13_corr.png"),
+  p13_corr,
+  width = 6,
+  height = 5,
+  dpi = 300
+)
+
+# Scatterplots
+p14_scatter_TS <- ggplot(df_wide, aes(x = Destructive, y = TreeSonic)) +
+   geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
+   geom_smooth(method = "lm", se = FALSE) +
+   theme_bw() +
+  labs(
+    title = "Comparison of Destructive with TreeSonic",
+    x = "Destructive MOE",
+    y = "TreeSonic MOE",
+    color = "Stand"
+  )
+
+ggsave(
+  here("outputs", "figures", "p14_Scatter_TS.png"),
+  p14_scatter_TS,
+  width = 6,
+  height = 5,
+  dpi = 300
+)
+
+p15_scatter_RG <- ggplot(df_wide, aes(x = Destructive, y = Resistrograph)) +
+  geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  labs(
+    title = "Comparison of Destructive with Resistograph",
+    x = "Destructive MOE",
+    y = "Resistograph MOE",
+    color = "Stand"
+  )
+
+ggsave(
+  here("outputs", "figures", "p15_scatter_RG.png"),
+  p15_scatter_RG,
+  width = 6,
+  height = 5,
+  dpi = 300
+)
+
+p16_scatter_MS <- ggplot(df_wide, aes(x = Destructive, y = Microsecond)) +
+  geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  labs(
+    title = "Comparison of Destructive with Microsecond",
+    x = "Destructive MOE",
+    y = "Microsecond MOE",
+    color = "Stand"
+  )
+
+ggsave(
+  here("outputs", "figures", "p16_scatter_MS.png"),
+  p16_scatter_MS,
+  width = 6,
+  height = 5,
+  dpi = 300
+)
