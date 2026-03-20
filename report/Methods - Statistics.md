@@ -78,5 +78,5 @@ $$
 
 Where:
 
-$$ y_i $$ is the actual MOE value (measured through distructive sampling)
-and $$ \hat{y}_i $$ is the predicted MOE value (estimated trhough non-destructive sampling methods)
+ - $\y_i$ is the actual MOE value (measured through distructive sampling)
+ - and $\hat{y}_i$ is the predicted MOE value (estimated trhough non-destructive sampling methods)
