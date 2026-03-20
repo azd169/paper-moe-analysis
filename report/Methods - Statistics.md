@@ -14,7 +14,11 @@ Two stand types were considered:
 
 Each tree was measured with all non-destructive methods. Destructive testing was performed on a subset of trees.
 
-## Model specification
+## MOE Association between treatments: Pearson correlation analysis and scatter plots
+
+Pearson correlation analysis and scatter plots were used to evaluate the strength of association between non-destructive testing (NDT) methods and destructive measurements of modulus of elasticity (MOE).
+
+## MOE differences between treatments: Model specification
 
 The modulus of elasticity (MOE) was analyzed using a linear mixed-effects model:
 
@@ -64,4 +68,15 @@ Bland–Altman plots were used to assess the agreement between each non-destruct
 
 The mean difference (bias) represents the systematic deviation of each NDT method relative to the destructive reference, while the limits of agreement (LoA), defined as the mean difference ± 1.96 standard deviations, describe the range within which most differences are expected to lie.
 
-In addition to Bland–Altman analysis, model performance was quantified using root mean square error (RMSE), mean bias, and percent bias relative to the destructive measurements. These metrics provide complementary information on both the magnitude and direction of error.
+## RMSE and bias
+
+Methods performance was quantified using root mean square error (RMSE), mean bias, and percent bias relative to the destructive measurements. These metrics provide complementary information on both the magnitude and direction of error.
+
+$$
+RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+$$
+
+Where:
+
+$$ y_i $$ is the actual MOE value (measured through distructive sampling)
+and $$ \hat{y}_i $$ is the predicted MOE value (estimated trhough non-destructive sampling methods)
