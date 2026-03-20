@@ -262,6 +262,13 @@ ggsave(plot = p5_boxplot_trt_stand,
        height = 5,
        dpi = 300)
 
+# Diagnostics
+# Shapiro-Wilk test
+shapiro.test(residuals(model))
+
+# Levene test
+leveneTest(MOE ~ Treatment * Stand, data = df_clean)
+
 # Linearity and homoscedasticity check
 df_clean$resid  <- resid(model)
 df_clean$fitted <- fitted(model)
