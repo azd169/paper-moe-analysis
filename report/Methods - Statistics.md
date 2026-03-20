@@ -76,6 +76,14 @@ $$
 RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
 $$
 
+$$
+\text{Bias} = \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)
+$$
+
+$$
+\text{Percent Bias} = \left( \frac{\sum_{i=1}^{n} (\hat{y}_i - y_i)}{\sum_{i=1}^{n} y_i} \right) \times 100
+$$
+
 Where:
 
  - $y_i$ is the actual MOE value (measured through distructive sampling)
