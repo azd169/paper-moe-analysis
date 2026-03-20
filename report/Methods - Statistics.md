@@ -81,7 +81,7 @@ $$
 $$
 
 $$
-\text{Percent Bias} = \left( \frac{\sum_{i=1}^{n} (\hat{y}_i - y_i)}{\sum_{i=1}^{n} y_i} \right) \times 100
+\text{Percent Bias} = \left( \frac{\sum_{i=1}^{n} (\hat{y}_i - y_i)}{\sum_{i=1}^{n} y_i} \right)
 $$
 
 Where:
