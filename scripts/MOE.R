@@ -490,6 +490,16 @@ ggsave(
 p14_scatter_TS <- ggplot(df_wide, aes(x = Destructive, y = TreeSonic)) +
    geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
    geom_smooth(method = "lm", se = FALSE) +
+  stat_poly_eq(
+    formula = y ~ x,
+    aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+    parse = TRUE
+  ) +
+  annotate("text",
+           x = Inf, y = -Inf,
+           label = paste0("RMSE = ", round(TS_RMSE, 2)),
+           hjust = 1.1, vjust = -0.5,
+           size = 4) +
    theme_bw() +
   labs(
     title = "Comparison of Destructive with TreeSonic",
@@ -509,6 +519,16 @@ ggsave(
 p15_scatter_RG <- ggplot(df_wide, aes(x = Destructive, y = Resistrograph)) +
   geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
   geom_smooth(method = "lm", se = FALSE) +
+  stat_poly_eq(
+    formula = y ~ x,
+    aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+    parse = TRUE
+  ) +
+  annotate("text",
+           x = Inf, y = -Inf,
+           label = paste0("RMSE = ", round(RG_RMSE, 2)),
+           hjust = 1.1, vjust = -0.5,
+           size = 4) +
   theme_bw() +
   labs(
     title = "Comparison of Destructive with Resistograph",
@@ -525,17 +545,29 @@ ggsave(
   dpi = 300
 )
 
+library(ggpmisc)
+
 p16_scatter_MS <- ggplot(df_wide, aes(x = Destructive, y = Microsecond)) +
   geom_point(aes(color = Stand), alpha = 0.7, size = 2.5) +
   geom_smooth(method = "lm", se = FALSE) +
+  stat_poly_eq(
+    formula = y ~ x,
+    aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+    parse = TRUE
+  ) +
+ annotate("text",
+          x = Inf, y = -Inf,
+          label = paste0("RMSE = ", round(MS_RMSE, 2)),
+          hjust = 1.1, vjust = -0.5,
+          size = 4) +
   theme_bw() +
-  labs(
+    labs(
     title = "Comparison of Destructive with Microsecond",
     x = "Destructive MOE",
     y = "Microsecond MOE",
     color = "Stand"
   )
-
+  
 ggsave(
   here("outputs", "figures", "p16_scatter_MS.png"),
   p16_scatter_MS,
