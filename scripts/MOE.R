@@ -74,7 +74,7 @@ p1_violin_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment)) +
   )
 
 ggsave(plot = p1_violin_trt,
-       filename = here("outputs", "figures", "plot1_violin_treatment.png"),
+       filename = here("outputs", "figures", "plot01_violin_treatment.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -93,7 +93,7 @@ p2_violin_stand <- ggplot(df_clean, aes(Stand, MOE, fill = Stand)) +
   )
 
 ggsave(plot = p2_violin_stand,
-       filename = here("outputs", "figures", "plot2_violin_stand.png"),
+       filename = here("outputs", "figures", "plot02_violin_stand.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -113,7 +113,7 @@ p3_violin_stand_x_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment))
   )
 
 ggsave(plot = p3_violin_stand_x_trt,
-       filename = here("outputs", "figures", "plot3_violin_stand_x_trt.png"),
+       filename = here("outputs", "figures", "plot03_violin_stand_x_trt.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -224,7 +224,7 @@ p4_boxplot_trt <- ggplot(df_clean, aes(Treatment, MOE, fill = Treatment)) +
     )
 
 ggsave(plot = p4_boxplot_trt,
-       filename = here("outputs", "figures", "plot4_boxplot_trt.png"),
+       filename = here("outputs", "figures", "plot04_boxplot_trt.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -257,7 +257,7 @@ p5_boxplot_trt_stand <- ggplot(df_clean, aes(x = Treatment, y = MOE, fill = Trea
   )
 
 ggsave(plot = p5_boxplot_trt_stand,
-       filename = here("outputs", "figures", "plot5_boxplot_trt_stand.png"),
+       filename = here("outputs", "figures", "plot05_boxplot_trt_stand.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -284,7 +284,7 @@ p6_fitted_vs_res <- ggplot(df_clean, aes(fitted, resid)) +
   )
 
 ggsave(plot = p6_fitted_vs_res,
-       filename = here("outputs", "figures", "plot6_fitted_vs_residuals.png"),
+       filename = here("outputs", "figures", "plot06_fitted_vs_residuals.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -298,10 +298,9 @@ p7_qqplot <- ggplot(df_clean, aes(sample = resid)) +
     x = "Theoretical Quantiles",
     y = "Sample Quantiles"
   )
-qqline(residuals(model))
 
 ggsave(plot = p7_qqplot,
-       filename = here("outputs", "figures", "plot7_qnorm.png"),
+       filename = here("outputs", "figures", "plot07_qnorm.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -316,7 +315,7 @@ p8_resid_hist <- ggplot(df_clean, aes(resid)) +
   )
 
 ggsave(plot = p8_resid_hist,
-       filename = here("outputs", "figures", "plot8_res_distr.png"),
+       filename = here("outputs", "figures", "plot08_res_distr.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -334,7 +333,7 @@ p9_res_out <- ggplot(df_clean, aes(Treatment, resid)) +
   theme_bw()
 
 ggsave(plot = p9_res_out,
-       filename = here("outputs", "figures", "plot9_res_out.png"),
+       filename = here("outputs", "figures", "plot09_res_out.png"),
        width = 7,
        height = 5,
        dpi = 300)
@@ -479,7 +478,7 @@ p13_corr <- ggplot(cor_df, aes(Var1, Var2, fill = value)) +
   )
 
 ggsave(
-  here("outputs", "figures", "p13_corr.png"),
+  here("outputs", "figures", "plot13_corr.png"),
   p13_corr,
   width = 6,
   height = 5,
@@ -509,7 +508,7 @@ p14_scatter_TS <- ggplot(df_wide, aes(x = Destructive, y = TreeSonic)) +
   )
 
 ggsave(
-  here("outputs", "figures", "p14_Scatter_TS.png"),
+  here("outputs", "figures", "plot14_Scatter_TS.png"),
   p14_scatter_TS,
   width = 6,
   height = 5,
@@ -538,7 +537,7 @@ p15_scatter_RG <- ggplot(df_wide, aes(x = Destructive, y = Resistrograph)) +
   )
 
 ggsave(
-  here("outputs", "figures", "p15_scatter_RG.png"),
+  here("outputs", "figures", "plot15_scatter_RG.png"),
   p15_scatter_RG,
   width = 6,
   height = 5,
@@ -569,7 +568,7 @@ p16_scatter_MS <- ggplot(df_wide, aes(x = Destructive, y = Microsecond)) +
   )
   
 ggsave(
-  here("outputs", "figures", "p16_scatter_MS.png"),
+  here("outputs", "figures", "plot16_scatter_MS.png"),
   p16_scatter_MS,
   width = 6,
   height = 5,
